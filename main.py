@@ -5,16 +5,14 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
-me = Account(TOKEN)
+user = Account(TOKEN)
 
 def print_chats():
-   for chat in me.chats:
+   for chat in user.chats:
       print(chat)
 
-group = me.menu()
-str_len = int(len(group.__repr__()))
+group = user.menu()
 print(group)
-print("#"*str_len*2)
 group.get_messages()
 
 group.display()
