@@ -7,12 +7,7 @@ TOKEN = os.getenv('TOKEN')
 
 user = Account(TOKEN)
 
-def print_chats():
-   for chat in user.chats:
-      print(chat)
-
 group = user.menu()
 print(group)
-group.get_messages()
 
 group.display()

@@ -9,7 +9,7 @@ class Group():
     def __init__(self, data):
         self.id = data['id']
         self.name = data['name']
-        self.most_recent_message = self._most_recent(data['messages'])
+        self.most_recent_message = data['messages']
         self.members = []
         self.messages = []
         self.get_members(data['members'])
@@ -28,11 +28,6 @@ class Group():
         for message in messages_data['messages']:
             self.messages.append(Message(message))
 
-    def _most_recent(self, messages_data):
-        text = messages_data['preview']['text']
-        sender = messages_data['preview']['nickname']
-        return f"{sender} - {text}"
-
     def get_members(self, member_data):
         for member in member_data:
             id = member['id']
@@ -47,12 +42,13 @@ class Group():
 
         to_display = self.messages[start:end]
 
-        if len(to_display) == 0:
-            # get more messages
+        while len(to_display) == 0:
             print("getting more messages")
-            self.get_messages(self.messages[-1].id)
+            if len(self.messages) > 0: 
+                self.get_messages(self.messages[-1].id)
+            else: 
+                self.get_messages()
             to_display = self.messages[start:end]
-
         
         for message in to_display[::-1]:
             print(message)

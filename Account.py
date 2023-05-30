@@ -9,8 +9,6 @@ class Account():
 		self.token = token
 		self.groups = []
 		self.chats = []
-		self.get_groups()
-		self.get_chats()
 
 	def get_groups(self, num=1):
 		params = {
@@ -48,16 +46,17 @@ class Account():
 
 			if next_len == curr_len:
 				print("no more groups")
-				return self.menu(curr_len - 6, curr_len - 1, 5)			
+				return self.menu(curr_len - 6, curr_len - 1, 5)
+
 			to_display = self.groups[start:end]
-    
+
 		for index, item in enumerate(to_display):
 			print(f"{index+1}) {item}")
 
 		val = input("Enter a command: ").strip()
-		
+
 		if val.isdigit():
-			i = int(val) - 1 
+			i = int(val) - 1
 			return self.groups[start+i]
 
 		if val.startswith("next") or val == "":
@@ -66,7 +65,7 @@ class Account():
 				range = int(commands[1])
 			val = self.menu(end, end + range, range)
 			return val
-		
+
 		if val.startswith("back"):
 			commands = val.split(' ')
 			if len(commands) == 2 and commands[1].isdigit():
