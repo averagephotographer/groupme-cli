@@ -17,10 +17,11 @@ class Group():
     def __repr__(self):
         return self.name
     
-    def get_messages(self):
+    def get_messages(self, before_id=""):
         params = {
             "token": os.getenv('TOKEN'),
-            "per_page": 200
+            "per_page": 200,
+            "before_id": before_id,
         }
         json_resp = r.get(f"{LINK}/groups/{self.id}/messages", params).json()
         messages_data = json_resp['response']
@@ -48,7 +49,10 @@ class Group():
 
         if len(to_display) == 0:
             # get more messages
-            pass
+            print("getting more messages")
+            self.get_messages(self.messages[-1].id)
+            to_display = self.messages[start:end]
+
         
         for message in to_display[::-1]:
             print(message)
